@@ -1,0 +1,71 @@
+{{ if .Site.Params.hero.enable | default false }}
+{{- $hero := .Site.Language.Params.hero | default .Site.Params.hero -}}
+<section id="hero" class="py-5 align-middle">
+    <div class="container px-3 px-sm-5 px-md-5 px-lg-5 pt-lg-3">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-8 content {{ if .Site.Params.animate }}animate{{ end }}" id="primary-font">
+                <span class="subtitle">
+                    {{ $hero.intro }}
+                </span>
+                <h1>
+                    {{ $hero.title }}
+                </h1>
+                <h2>
+                    {{ $hero.subtitle }}
+                </h2>
+                <p class="hero-content">
+                    {{ $hero.content | markdownify }}
+                </p>
+                {{ if .Site.Params.hero.skills.enable }}
+                {{ $hero.skills.title | default .Site.Params.hero.skills.title }}
+                <ul>
+                    {{ range .Site.Params.hero.skills.items }}
+                    <li>{{ . | markdownify }}</li>
+                    {{ end }}
+                </ul>
+                {{ end }}
+                <div class="row">
+                    <div class="col-auto h-100">
+                        {{ if .Site.Params.hero.button.enable }}
+                        <a href="{{ .Site.Params.hero.button.url }}" class="btn" {{ cond .Site.Params.hero.button.download "download" "" }}
+			  {{ if .Site.Params.hero.button.newPage | default true }}
+                          target="_blank"
+                          {{ end }}>
+                            {{ $hero.button.name | default .Site.Params.hero.button.name }}
+                        </a>
+                        {{ end }}
+                    </div>
+                    <div class="col-auto px-0 h-100">
+                        {{- partial "sections/hero/social.html" . -}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                <div class="row justify-content-center">
+                    <div class="col-sm-12 col-md-9 pt-5 image {{ if .Site.Params.animate }}animate{{ end }} px-5 px-md-5 px-lg-0 text-center">
+                        <img src="{{ .Site.Params.hero.image }}"
+                            class="img-thumbnail mx-auto{{ if .Site.Params.hero.roundImage }} rounded-circle{{ end }}"
+                            alt="{{ .Site.Params.title }} profile image"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ if .Site.Params.hero.bottomImage.enable | default true }}
+    <div class="hero-arrow-scroll d-md-block d-lg-block d-none text-center pt-lg-5">
+        <div class="scroll-text">
+            <span>
+                👇 More below
+            </span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true"
+            focusable="false" role="img">
+            <!-- Optional background circle – comment out if you only want the arrow -->
+            <polyline points="6,10 12,16 18,10" fill="none" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+    </div>
+    {{ end }}
+</section>
+{{ end }}
